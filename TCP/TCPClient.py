@@ -1,3 +1,4 @@
+import base64
 import socket
 import sys
 
@@ -17,11 +18,14 @@ try:
     print("Socket connected to %s on port: %s" % (target_host, target_port))
 
     # Reading file and sending data to server
-    with open("/PythonProject/FileHandlers/UpdateLeaderboard.txt", "r") as fi:
+    with open("/home/bob/PycharmProjects/PythonProject/FileHandlers/UpdateLeaderboard.txt", "r") as fi:
         data = fi.read()
         while data:
-            sock.send(data.encode())
+            encoded_data = base64.b64encode(data.encode())
+            sock.send(encoded_data)
             data = fi.read()
+
+
 
 except socket.error as err:
     print("Failed to connect to %s on port %s" % (target_host, target_port))
