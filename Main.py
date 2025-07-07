@@ -24,9 +24,9 @@ def open_tcp_panel():
     size = [100]  # Initial size for resizing images
 
     image_paths = [
-        "C:/Users/abell/PycharmProjects/PythonProject1/Jeff1.gif",
-        "C:/Users/abell/PycharmProjects/PythonProject1/Jeff2.gif",
-        "C:/Users/abell/PycharmProjects/PythonProject1/Jeff3.gif"
+        "/PycharmProjects/PythonProject1/Jeff1.gif",
+        "/PycharmProjects/PythonProject1/Jeff2.gif",
+        "/PycharmProjects/PythonProject1/Jeff3.gif"
     ]
 
     original_images = [Image.open(path) for path in image_paths]
