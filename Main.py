@@ -15,16 +15,16 @@ def update_image():
 def create_imageWindow():
     # creation of the main window
     image = tk.Toplevel()  
-    image.title("Archangel and Alek's Cookie Clicker")
+    image.title("Cookie Clicker")
     image.geometry("500x500")
     # the title of the window
-    lbl = tk.Label(image, text="Welcome to Archangel + Alek's Cookie Clicker! ")  
+    lbl = tk.Label(image, text="Welcome to Archangel + Aleks' Cookie Clicker! ")  
     lbl.pack(pady=10)  # ensures the text is visible
     return image, lbl
 
 
 def ModuxCookie_Creation(image_window, lbl):
-    cookie_image = tk.PhotoImage(file="C:/Users/abell/PycharmProjects/PythonProject4/Jeff3.png")
+    cookie_image = tk.PhotoImage(file="/PycharmProjects/PythonProject4/Jeff3.png")
 
     # create a button with the cookie image
     button = tk.Button(image_window, image=cookie_image, command=update_image)
