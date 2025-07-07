@@ -10,7 +10,7 @@ lbl.grid(row=0, column=0)
 
 
 def on_click():
-    clickCount = clickCount + 1 #not working rn
+    clickCount = clickCount + 1
     print("Client clicked button")
     print("Button new value :",clickCount)
 

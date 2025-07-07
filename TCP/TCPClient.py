@@ -17,7 +17,7 @@ try:
     print("Socket connected to %s on port: %s" % (target_host, target_port))
 
     # Reading file and sending data to server
-    with open("/home/bob/PycharmProjects/PythonProject/FileHandlers/UpdateLeaderboard.txt", "r") as fi:
+    with open("/PythonProject/FileHandlers/UpdateLeaderboard.txt", "r") as fi:
         data = fi.read()
         while data:
             sock.send(data.encode())

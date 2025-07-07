@@ -9,13 +9,19 @@ while True:
     client_socket,addr=server_socket.accept()
     print("Client connected from ",addr)
     while True:
-        data=client_socket.recv(1024)
+
+        data = client_socket.recv(1024)
         if not data or data.decode('utf-8')=='END':
             break
         print("received from client client : %s"%data.decode("utf-8"))
+
+        with open("ServerLeaderboard", 'a') as file:
+            file.write("received from client client : %s"%data.decode("utf-8"))
+
         try:
             client_socket.send(bytes('Hey client','utf-8'))
         except:
             print("Exited by the user")
+
     client_socket.close()
 server_socket.close
