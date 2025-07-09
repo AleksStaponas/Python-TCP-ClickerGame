@@ -16,15 +16,14 @@ player_name = "Player"
 leaderboard_data = []
 
 ICON_PATHS = {
-1: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Demon.png", 1200),
-2: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
-3: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Happy.png", 1000),
+    1: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Demon.png", 1200),
+    2: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
+    3: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Happy.png", 1000),
 }
 
 RESIZED_ICONS = {}
 
 def load_users():
-
     if os.path.exists(USER_FILE) and os.path.getsize(USER_FILE) > 0:
         with open(USER_FILE, "r") as f:
             return json.load(f)
@@ -86,19 +85,23 @@ def send_leaderboard():
             sock.close()
             print("Leaderboard sent to server.")
         except Exception as e:
-                print("Error sending leaderboard:", e)
-                time.sleep(5)
-
-
-
+            print("Error sending leaderboard:", e)
+            time.sleep(5)
 
 def open_clicker_window(player: str):
     global leaderboard_data
-    click_count = 1
     load_scores()
 
-    if not any(name == player for name, _ in leaderboard_data):
+    # Load player's last score
+    player_score = 0
+    for name, score in leaderboard_data:
+        if name == player:
+            player_score = score
+            break
+    else:
         leaderboard_data.append((player, 0))
+
+    click_count = player_score
 
     clicker = tk.Tk()
     clicker.title("Clicker Leaderboard")
@@ -106,8 +109,6 @@ def open_clicker_window(player: str):
     clicker.configure(bg="#f0f0f0")
 
     load_resized_icons(clicker)
-
-    # Start leaderboard sending in the background
     threading.Thread(target=send_leaderboard, daemon=True).start()
 
     title_label = tk.Label(clicker, text=f"Clicks: {click_count}", font=("Arial", 14), fg="blue", bg="#f0f0f0")
@@ -173,6 +174,11 @@ def open_clicker_window(player: str):
         update_leaderboard()
         render_leaderboard()
 
+    def on_close():
+        update_leaderboard()
+        save_scores()
+        clicker.destroy()
+
     btn = tk.Button(clicker, text="Click Me!", font=("Arial", 12), command=on_click)
     btn.pack(pady=10)
 
@@ -182,6 +188,7 @@ def open_clicker_window(player: str):
 
     update_leaderboard()
     render_leaderboard()
+    clicker.protocol("WM_DELETE_WINDOW", on_close)
     clicker.mainloop()
 
 def validate_login(username_var, pw_var, cp_var, win, error_label):
@@ -203,9 +210,9 @@ def validate_login(username_var, pw_var, cp_var, win, error_label):
 
 def password_window():
     login = tk.Tk()
-    login.title("Login")
-    login.geometry("350x200")
-    login.configure(bg="#f0f0f0")
+    login.title("Login") # the title of the window
+    login.geometry("350x200") # the size
+    login.configure(bg="#f0f0f0") # background colour
 
     tk.Label(login, text="Username", bg="#f0f0f0", fg="blue").grid(row=0, column=0, padx=10, pady=5)
     username_var = tk.StringVar()
