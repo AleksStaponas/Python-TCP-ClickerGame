@@ -6,27 +6,65 @@ import tkinter as tk
 from functools import partial
 import os
 from PIL import Image, ImageTk
+import json
+
+USER_FILE = "users.json"
+LAST_USER_FILE = "last_user.txt"
+SAVE_FILE = "progress.json"
 
 player_name = "Player"
-
-leaderboard_data = [
-    ("Bob", 1200),
-    ("Aleks", 1100),
-    ("Archangel", 1000),
-    ("Daisy", 550),
-    ("Ethan", 500),
-    ("Ella", 350),
-    ("Martin", 250),
-    ("Josh", 150),
-]
+leaderboard_data = []
 
 ICON_PATHS = {
-    1: (r"/PythonProject/images/Emoji's/Demon.png", 1200),
-    2: (r"/PythonProject/images/Emoji's/Sunglasses.png", 1100),
-    3: (r"/PythonProject/images/Emoji's/Sunglasses.png", 1000),
+1: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Demon.png", 1200),
+2: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
+3: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Happy.png", 1000),
 }
 
 RESIZED_ICONS = {}
+
+def load_users():
+
+    if os.path.exists(USER_FILE) and os.path.getsize(USER_FILE) > 0:
+        with open(USER_FILE, "r") as f:
+            return json.load(f)
+    return {}
+
+def save_users(users):
+    with open(USER_FILE, "w") as f:
+        json.dump(users, f)
+
+def get_last_user():
+    if os.path.exists(LAST_USER_FILE):
+        with open(LAST_USER_FILE, "r") as f:
+            return f.read().strip()
+    return None
+
+def set_last_user(user):
+    with open(LAST_USER_FILE, "w") as f:
+        f.write(user)
+
+def load_scores():
+    global leaderboard_data
+    if os.path.exists(SAVE_FILE) and os.path.getsize(SAVE_FILE) > 0:
+        with open(SAVE_FILE, "r") as f:
+            data = json.load(f)
+            leaderboard_data = list(data.items())
+    else:
+        leaderboard_data = [
+            ("Bob", 2000),
+            ("Aleks", 1100),
+            ("Archangel", 1000),
+            ("Daisy", 550),
+            ("Ethan", 500),
+            ("Ella", 350),
+            ("Martin", 250),
+            ("Josh", 150),
+        ]
+
+def save_scores():
+    with open(SAVE_FILE, "w") as f:
+        json.dump({name: score for name, score in leaderboard_data}, f)
 
 def load_resized_icons(master):
     for idx, (path, _) in ICON_PATHS.items():
@@ -40,27 +78,24 @@ def load_resized_icons(master):
 def send_leaderboard():
     while True:
         try:
-            # Connect to the server
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.connect(("127.0.0.1", 12345))
-
-            # Create leaderboard string
             leaderboard_str = "\n".join(f"{name}:{score}" for name, score in leaderboard_data)
             encoded_data = base64.b64encode(leaderboard_str.encode())
-
-            # Send the data
             sock.sendall(encoded_data)
             sock.close()
             print("Leaderboard sent to server.")
-
         except Exception as e:
-            print("Error sending leaderboard:", e)
+                print("Error sending leaderboard:", e)
+                time.sleep(5)
 
-        time.sleep(5)  # Wait before sending again
+
+
 
 def open_clicker_window(player: str):
     global leaderboard_data
-    click_count = 999
+    click_count = 1
+    load_scores()
 
     if not any(name == player for name, _ in leaderboard_data):
         leaderboard_data.append((player, 0))
@@ -120,12 +155,14 @@ def open_clicker_window(player: str):
             else:
                 tk.Label(row, width=5, bg="#f0f0f0").pack(side="left")
 
-            tk.Label(row, text=f"{idx}. {n} — {s}", font=("Arial", 12, "bold"), fg="blue", bg="#f0f0f0").pack(side="left")
+            tk.Label(row, text=f"{idx}. {n} — {s}", font=("Arial", 12, "bold"), fg="blue", bg="#f0f0f0").pack(
+                side="left")
 
         tk.Frame(board_frame, height=2, bd=1, relief="sunken", bg="#999").pack(fill="x", pady=5)
 
         for idx, (n, s) in enumerate(leaderboard_data[3:], start=4):
-            tk.Label(board_frame, text=f"{idx}. {n} — {s}", font=("Arial", 11), fg="blue", bg="#f0f0f0").pack(anchor="w", pady=1)
+            tk.Label(board_frame, text=f"{idx}. {n} — {s}", font=("Arial", 11), fg="blue", bg="#f0f0f0").pack(
+                anchor="w", pady=1)
 
     def on_click():
         nonlocal click_count, button_image_index
@@ -192,3 +229,4 @@ def password_window():
 
 if __name__ == "__main__":
     password_window()
+
