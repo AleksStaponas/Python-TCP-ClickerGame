@@ -26,7 +26,6 @@ try:
             data = fi.read()
 
 
-
 except socket.error as err:
     print("Failed to connect to %s on port %s" % (target_host, target_port))
     print("Reason: %s" % str(err))

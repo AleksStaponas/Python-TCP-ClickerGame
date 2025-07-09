@@ -18,9 +18,9 @@ while True:
 
         if not data or data.decode('utf-8')=='END':
             break
-        print("received from client client : %s"%decoded_data)
+        print("%s"%decoded_data)
 
-        with open("/home/bob/PycharmProjects/PythonProject/TCP/ServerLeaderboard", 'a') as file:
+        with open("/PycharmProjects/PythonProject/TCP/ServerLeaderboard", 'a') as file:
             file.write("received from client : %s"%decoded_data)
 
         try:

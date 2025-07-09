@@ -10,7 +10,7 @@ A Python Cookie Clicker game featuring secure client-server communication using 
 
 - **Base64 Message Encoding**: Simple data encryption
 
-- **Login system**: Allowing different usernames and acounts to be created
+- **Login system**: Allowing different usernames
 
 ## In progress
 

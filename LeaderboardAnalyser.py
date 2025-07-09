@@ -1,6 +1,6 @@
 newArray = []
 def leaderboardOrder():
-    file = open("/home/bob/PycharmProjects/PythonProject/TCP/ServerLeaderboard","r")
+    file = open("/PythonProject/TCP/ServerLeaderboard","r")
     for line in file:
         line = line.strip()
         if line:
