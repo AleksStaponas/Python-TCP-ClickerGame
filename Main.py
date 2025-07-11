@@ -16,9 +16,9 @@ player_name = "Player"
 leaderboard_data = []
 
 ICON_PATHS = {
-    1: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Demon.png", 1200),
-    2: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
-    3: (r"C:\Users\abell\PycharmProjects\PythonTCPProject\images\Emoji's\Happy.png", 1000),
+    1: (r"\PythonTCPProject\images\Emoji's\Demon.png", 1200),
+    2: (r"\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
+    3: (r"\PythonTCPProject\images\Emoji's\Happy.png", 1000),
 }
 
 RESIZED_ICONS = {}
