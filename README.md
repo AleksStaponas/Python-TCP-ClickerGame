@@ -16,7 +16,11 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **improved UI**: top 3 players in the leaderboard have different emojis
 
-<br></br>
+## Original game concept
+<p align="center">
+  <img src="images/Concept.png" alt="Original game concept" />
+</p>
+
 # The Leaderboard emojis
 
 ## First in the poduim 
