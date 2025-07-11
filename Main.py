@@ -74,6 +74,7 @@ def load_resized_icons(master):
         else:
             RESIZED_ICONS[idx] = None
 
+
 def send_leaderboard():
     while True:
         try:
@@ -82,11 +83,18 @@ def send_leaderboard():
             leaderboard_str = "\n".join(f"{name}:{score}" for name, score in leaderboard_data)
             encoded_data = base64.b64encode(leaderboard_str.encode())
             sock.sendall(encoded_data)
+
+            # Wait for response from server before closing
+            response = sock.recv(1024)
+            print("Server responded:", response.decode())
+
             sock.close()
             print("Leaderboard sent to server.")
+            time.sleep(5)
         except Exception as e:
             print("Error sending leaderboard:", e)
             time.sleep(5)
+
 
 def open_clicker_window(player: str):
     global leaderboard_data
