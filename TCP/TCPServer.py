@@ -20,7 +20,7 @@ while True:
             break
         print("%s"%decoded_data)
 
-        with open("/PycharmProjects/PythonProject/TCP/ServerLeaderboard", 'a') as file:
+        with open("/PythonTCPProject/TCP/ServerLeaderboard", 'a') as file:
             file.write("received from client : %s"%decoded_data)
 
         try:
