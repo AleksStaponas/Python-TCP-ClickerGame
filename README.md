@@ -12,7 +12,7 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **Login system**: Allowing different usernames
 
-- **Leaderboard updating**: Leadrboard updates and saves user progress 
+- **Leaderboard updating**: Leaderboard updates and saves user progress 
 
 - **improved UI**: top 3 players in the leaderboard have different emojis
 
