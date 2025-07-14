@@ -8,13 +8,17 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **TCP Socket Communication**: Persistent connections between client and server
 
-- **Base64 Message Encoding**: Simple data encryption
+- **Base64 Message Encoding**: Simple data encoding
 
 - **Login system**: Allowing different usernames
 
 - **Leaderboard updating**: Leaderboard updates and saves user progress 
 
 - **improved UI**: top 3 players in the leaderboard have different emojis
+
+## In progress
+
+- **improved data security e.g. hashing and server logging**
 
 ## Original game concept
 <p align="center">
