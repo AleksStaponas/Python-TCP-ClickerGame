@@ -25,6 +25,11 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
   <img src="images/Concept.png" alt="Original game concept" />
 </p>
 
+## More Documentation
+
+### [Additional Information](AdditionalInfo.md)
+<br>
+
 # The Leaderboard emojis
 
 ## First in the poduim 
