@@ -25,7 +25,12 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
   <img src="images/Concept.png" alt="Original game concept" />
 </p>
 
-## More Documentation
+## Updated game Prototype
+<p align="center">
+  <img src="images/NewConcept.JPG" alt="Updated game prototype" />
+</p>
+
+## More Documentation (Game Screenshots & Features)
 
 ### [Additional Information](AdditionalInfo.md)
 <br>
