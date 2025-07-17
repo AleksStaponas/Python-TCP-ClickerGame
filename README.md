@@ -35,22 +35,7 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 ### [Additional Information](AdditionalInfo.md)
 <br>
 
-# The Leaderboard emojis
+## Acknowledgments
 
-## First in the poduim 
+Thanks to **Archangel Lusiama** ([@hinology18](https://github.com/hinology18)) for collaborating on the development during the project.
 
-<p align="center">
-  <img src="images/Emoji's/Demon.png" alt="Demon Emoji" />
-</p>
-
-## Second in the poduim 
-
-<p align="center">
-  <img src="images/Emoji's/Sunglasses.png" alt="Sunglasses Emoji" />
-</p>
-
-## Third in the poduim 
-
-<p align="center">
-  <img src="images/Emoji's/Happy.png" alt="Happy Emoji" />
-</p>
