@@ -1,4 +1,5 @@
 import base64
+import random
 import socket
 import threading
 import time
@@ -22,6 +23,14 @@ ICON_PATHS = {
 }
 
 RESIZED_ICONS = {}
+
+def BotCount():
+    online = True
+    while online:
+        for i, (name, score) in enumerate(leaderboard_data):
+            leaderboard_data[i] = (name, score + random.randint(1, 3))
+        time.sleep(2)
+
 
 def load_users():
     if os.path.exists(USER_FILE) and os.path.getsize(USER_FILE) > 0:
@@ -52,14 +61,18 @@ def load_scores():
     else:
         leaderboard_data = [
             ("Bob", 2000),
-            ("Aleks", 1100),
-            ("Archangel", 1000),
+            ("Jeff", 1100),
+            ("Zane", 1000),
             ("Daisy", 550),
             ("Ethan", 500),
             ("Ella", 350),
             ("Martin", 250),
             ("Josh", 150),
         ]
+load_scores()
+threading.Thread(target=BotCount, daemon=True).start()
+
+
 
 def save_scores():
     with open(SAVE_FILE, "w") as f:
@@ -119,7 +132,7 @@ def open_clicker_window(player: str):
     load_resized_icons(clicker)
     threading.Thread(target=send_leaderboard, daemon=True).start()
 
-    title_label = tk.Label(clicker, text=f"Clicks: {click_count}", font=("Arial", 14), fg="blue", bg="#f0f0f0")
+    title_label = tk.Label(clicker, text=f"Clicks: {click_count}", font=("Arial", 14), fg="black", bg="#f0f0f0")
     title_label.pack(pady=10)
 
     board_frame = tk.Frame(clicker, bg="#f0f0f0")
@@ -127,9 +140,9 @@ def open_clicker_window(player: str):
 
     button_images = []
     button_image_paths = [
-        r"\PycharmProjects\PythonProject3\Jeff1.png",
-        r"\PycharmProjects\PythonProject3\Jeff2.png",
-        r"\PycharmProjects\PythonProject3\Jeff3.png",
+        r"\PythonTCPProject\images\BlobAnimations\Jeff1.png",
+        r"\PythonTCPProject\images\BlobAnimations\Jeff2.png",
+        r"\PythonTCPProject\images\BlobAnimations\Jeff3.png",
     ]
     for path in button_image_paths:
         if os.path.isfile(path):
@@ -194,10 +207,19 @@ def open_clicker_window(player: str):
         btn.config(image=button_images[0])
         btn.image = button_images[0]
 
+    def Botrefresh():
+        update_leaderboard()
+        render_leaderboard()
+        clicker.after(1000, Botrefresh)
+
+    Botrefresh()
+
     update_leaderboard()
     render_leaderboard()
     clicker.protocol("WM_DELETE_WINDOW", on_close)
     clicker.mainloop()
+
+
 
 def validate_login(username_var, pw_var, cp_var, win, error_label):
     user = username_var.get().strip()
@@ -222,15 +244,15 @@ def password_window():
     login.geometry("350x200") # the size
     login.configure(bg="#f0f0f0") # background colour
 
-    tk.Label(login, text="Username", bg="#f0f0f0", fg="blue").grid(row=0, column=0, padx=10, pady=5)
+    tk.Label(login, text="Username", bg="#f0f0f0", fg="black").grid(row=0, column=0, padx=10, pady=5)
     username_var = tk.StringVar()
     tk.Entry(login, textvariable=username_var).grid(row=0, column=1)
 
-    tk.Label(login, text="Password", bg="#f0f0f0", fg="blue").grid(row=1, column=0)
+    tk.Label(login, text="Password", bg="#f0f0f0", fg="black").grid(row=1, column=0)
     password_var = tk.StringVar()
     tk.Entry(login, textvariable=password_var, show="*").grid(row=1, column=1)
 
-    tk.Label(login, text="Confirm Password", bg="#f0f0f0", fg="blue").grid(row=2, column=0)
+    tk.Label(login, text="Confirm Password", bg="#f0f0f0", fg="black").grid(row=2, column=0)
     confirm_var = tk.StringVar()
     tk.Entry(login, textvariable=confirm_var, show="*").grid(row=2, column=1)
 
