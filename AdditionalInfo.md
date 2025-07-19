@@ -20,11 +20,16 @@ This is what the Cookie Clicker game looks like. The button has animations for l
 </p>
 
 # Flowchart Depictions
+This section contains flowcharts that explain how the game functions
 
-This section contains flowcharts that explain how the program works, focusing on data integrity and tamper prevention.
+## Leaderboard updating for added competitiveness
+To increase competitiveness, bots have their scores updated by 1–3 clicks every 2 seconds.
+<p align="center">
+  <img src="images/Diagrams/BotLeaderboardUpdate.JPG" alt="Leaderboard Updating" />
+</p>
 
 ## In Progress: Verification to Prevent Data Modification
 To prevent cheating or file tampering, this game uses HMAC (Hash-based Message Authentication Code) to verify updated leaderboard data.
 <p align="center">
-  <img src="images/leaderboard_auth_function.JPG" alt="Leaderboard Authentication" />
+  <img src="images/Diagrams/leaderboard_auth_function.JPG" alt="Leaderboard Authentication" />
 </p>
