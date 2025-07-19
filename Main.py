@@ -72,8 +72,6 @@ def load_scores():
 load_scores()
 threading.Thread(target=BotCount, daemon=True).start()
 
-
-
 def save_scores():
     with open(SAVE_FILE, "w") as f:
         json.dump({name: score for name, score in leaderboard_data}, f)
