@@ -16,6 +16,8 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **improved UI**: top 3 players in the leaderboard have different emojis
 
+- **Simulated bots** randomly update their scores to create a competitive leaderboard
+  
 ## In progress
 
 - **improved data security e.g. hashing and server logging**
