@@ -1,6 +1,8 @@
 import base64
+import hashlib
 import random
 import socket
+import sys
 import threading
 import time
 import tkinter as tk
@@ -18,9 +20,12 @@ leaderboard_data = []
 
 ICON_PATHS = {
     1: (r"\PythonTCPProject\images\Emoji's\Demon.png", 1200),
-    2: (r"\PythonTCPProject\images\Emoji's\Sunglasses.png", 1100),
-    3: (r"\PythonTCPProject\images\Emoji's\Happy.png", 1000),
+    2: (r"\PythonTCPProject\images\Emoji's\Happy.png", 1100),
+    3: (r"\PythonTCPProject\images\Emoji's\Sunglasses.png", 1000),
 }
+
+file_path = "/PythonTCPProject/progress.json"
+hash_store_path = "/PythonTCPProject/progress.hash"
 
 RESIZED_ICONS = {}
 
@@ -152,12 +157,40 @@ def open_clicker_window(player: str):
 
     button_image_index = 0
 
+    def file_hash(path, algorithm='sha256'):
+        hash_func = hashlib.new(algorithm)
+        with open(path, 'rb') as file:
+            while chunk := file.read(8192):
+                hash_func.update(chunk)
+        return hash_func.hexdigest()
+
     def update_leaderboard():
         nonlocal click_count
         for i, (n, s) in enumerate(leaderboard_data):
             if n == player:
                 leaderboard_data[i] = (n, click_count)
         leaderboard_data.sort(key=lambda x: x[1], reverse=True)
+        current_hash = file_hash(file_path)
+
+        def save_hash(hash_value, path):
+            with open(path, 'w') as f:
+                f.write(hash_value)
+
+        def load_hash(path):
+            if not os.path.exists(path):
+                return None
+            with open(path, 'r') as f:
+                return f.read().strip()
+
+        saved_hash = load_hash(hash_store_path)
+        if saved_hash is None:
+            print("No saved hash found. Saving current hash.")
+            save_hash(current_hash, hash_store_path)
+        elif current_hash != saved_hash:
+            print("Warning: File has been modified externally!")
+            sys.exit()
+        else:
+            print("File is unchanged.")
 
     def render_leaderboard():
         for widget in board_frame.winfo_children():
