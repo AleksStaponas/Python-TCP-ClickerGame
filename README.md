@@ -14,13 +14,14 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **Leaderboard updating**: Leaderboard updates and saves user progress 
 
-- **improved UI**: top 3 players in the leaderboard have different emojis
+- **Improved UI**: top 3 players in the leaderboard have different emojis
 
 - **Simulated bots** randomly update their scores to create a competitive leaderboard
-  
+
+- **Hash based security** prevents users from modifying the leaderbaord data by verfiying with a hash file.  
 ## In progress
 
-- **improved data security e.g. hashing and server logging**
+- **Improved account security and activity logging with customizable usernames**
 
 ## Original game concept
 <p align="center">
