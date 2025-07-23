@@ -10,9 +10,9 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 - **Base64 Message Encoding**: Simple data encoding
 
-- **Login system**: Allowing different usernames
+- **Login system**: Allowing different usernames 
 
-- **Leaderboard updating**: Leaderboard updates and saves user progress 
+- **Leaderboard updating**: Leaderboard updates and saves user progress with server logging
 
 - **Improved UI**: top 3 players in the leaderboard have different emojis
 
@@ -21,7 +21,7 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 - **Hash based security** prevents users from modifying the leaderbaord data by verfiying with a hash file.  
 ## In progress
 
-- **Improved account security and activity logging with customizable usernames**
+- **Improved account security with customizable usernames**
 
 ## Original game concept
 <p align="center">
