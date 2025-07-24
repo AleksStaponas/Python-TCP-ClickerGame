@@ -22,6 +22,7 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 ## In progress
 
 - **Improved account security with customizable usernames**
+- **Welcome banner for login page**
 
 ## Original game concept
 <p align="center">
@@ -37,6 +38,10 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 
 ### [Additional Information](AdditionalInfo.md)
 <br>
+
+## Want to contribute?
+If you're interested in contributing to this project, please check out the page below:  
+[Contribution Guidelines](CONTRIBUTING.md)
 
 ## Acknowledgments
 
