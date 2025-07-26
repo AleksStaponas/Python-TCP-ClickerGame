@@ -6,28 +6,38 @@ import sys
 import threading
 import time
 import tkinter as tk
+from tkinter import ttk
+from tkinter.colorchooser import askcolor
 from functools import partial
 import os
 from PIL import Image, ImageTk
 import json
 
-USER_FILE = "users.json"
+SAVE_FILE = r"PythonTCPProject/UserAccount/progress.json"
+USER_FILE = r"PythonTCPProject/UserAccount/users.json"
 LAST_USER_FILE = "last_user.txt"
-SAVE_FILE = "progress.json"
 
 player_name = "Player"
 leaderboard_data = []
 
 ICON_PATHS = {
-    1: (r"\PythonTCPProject\images\Emoji's\Demon.png", 1200),
-    2: (r"\PythonTCPProject\images\Emoji's\Happy.png", 1100),
-    3: (r"\PythonTCPProject\images\Emoji's\Sunglasses.png", 1000),
+    1: (r"PythonTCPProject/images/Emoji's/Demon.png", 1200),
+    2: (r"PythonTCPProject/images/Emoji's/Sunglasses.png", 1100),
+    3: (r"PythonTCPProject/images/Emoji's/Happy.png", 1000),
 }
 
-file_path = "/PythonTCPProject/progress.json"
-hash_store_path = "/PythonTCPProject/progress.hash"
+file_path = r"PythonTCPProject/UserAccount/progress.json"
+hash_store_path = "PythonTCPProject/UserAccount/progress.hash"
 
 RESIZED_ICONS = {}
+
+
+def file_hash(path, algorithm='sha256'):
+    hash_func = hashlib.new(algorithm)
+    with open(path, 'rb') as file:
+        while chunk := file.read(8192):
+            hash_func.update(chunk)
+    return hash_func.hexdigest()
 
 def BotCount():
     online = True
@@ -57,6 +67,16 @@ def set_last_user(user):
     with open(LAST_USER_FILE, "w") as f:
         f.write(user)
 
+def save_scores():
+    with open(SAVE_FILE, "w") as f:
+        json.dump({name: score for name, score in leaderboard_data}, f)
+
+    # Update the hash file immediately
+    os.makedirs(os.path.dirname(hash_store_path), exist_ok=True)
+    with open(hash_store_path, "w") as hash_file:
+        hash_file.write(file_hash(SAVE_FILE))
+
+
 def load_scores():
     global leaderboard_data
     if os.path.exists(SAVE_FILE) and os.path.getsize(SAVE_FILE) > 0:
@@ -74,12 +94,10 @@ def load_scores():
             ("Martin", 250),
             ("Josh", 150),
         ]
+        save_scores()
+
 load_scores()
 threading.Thread(target=BotCount, daemon=True).start()
-
-def save_scores():
-    with open(SAVE_FILE, "w") as f:
-        json.dump({name: score for name, score in leaderboard_data}, f)
 
 def load_resized_icons(master):
     for idx, (path, _) in ICON_PATHS.items():
@@ -125,6 +143,10 @@ def open_clicker_window(player: str):
     else:
         leaderboard_data.append((player, 0))
 
+    with open('PythonTCPProject/UserAccount/player_preferences.json', 'r') as file:
+        data = json.load(file)
+        colorChosen = data['color']
+
     click_count = player_score
 
     clicker = tk.Tk()
@@ -143,9 +165,9 @@ def open_clicker_window(player: str):
 
     button_images = []
     button_image_paths = [
-        r"\PythonTCPProject\images\BlobAnimations\Jeff1.png",
-        r"\PythonTCPProject\images\BlobAnimations\Jeff2.png",
-        r"\PythonTCPProject\images\BlobAnimations\Jeff3.png",
+        r"PythonTCPProject/images/BlobAnimations/Jeff1.png",
+        r"PythonTCPProject/images/BlobAnimations/Jeff2.png",
+        r"PythonTCPProject/images/BlobAnimations/Jeff3.png",
     ]
     for path in button_image_paths:
         if os.path.isfile(path):
@@ -157,40 +179,36 @@ def open_clicker_window(player: str):
 
     button_image_index = 0
 
-    def file_hash(path, algorithm='sha256'):
-        hash_func = hashlib.new(algorithm)
-        with open(path, 'rb') as file:
-            while chunk := file.read(8192):
-                hash_func.update(chunk)
-        return hash_func.hexdigest()
-
     def update_leaderboard():
         nonlocal click_count
         for i, (n, s) in enumerate(leaderboard_data):
             if n == player:
                 leaderboard_data[i] = (n, click_count)
         leaderboard_data.sort(key=lambda x: x[1], reverse=True)
-        current_hash = file_hash(file_path)
 
-        def save_hash(hash_value, path):
-            with open(path, 'w') as f:
-                f.write(hash_value)
+        # Load saved hash for tamper detection
+        if not os.path.exists(SAVE_FILE):
+            os.makedirs(os.path.dirname(SAVE_FILE), exist_ok=True)
+            save_scores()
+            print("progress.json not found, created new file.")
+            return
 
-        def load_hash(path):
-            if not os.path.exists(path):
-                return None
-            with open(path, 'r') as f:
-                return f.read().strip()
+        if not os.path.exists(hash_store_path):
+            os.makedirs(os.path.dirname(hash_store_path), exist_ok=True)
+            with open(hash_store_path, 'w') as f:
+                f.write(file_hash(SAVE_FILE))
+            print("Hash file not found, created new hash.")
+            return
 
-        saved_hash = load_hash(hash_store_path)
-        if saved_hash is None:
-            print("No saved hash found. Saving current hash.")
-            save_hash(current_hash, hash_store_path)
-        elif current_hash != saved_hash:
-            print("Warning: File has been modified externally!")
-            sys.exit()
+        with open(hash_store_path, 'r') as f:
+            saved_hash = f.read().strip()
+
+        current_hash = file_hash(SAVE_FILE)
+        if current_hash != saved_hash:
+            print("Tampering detected")
+            quit()
         else:
-            print("File is unchanged.")
+            print("No detected tampering.")
 
     def render_leaderboard():
         for widget in board_frame.winfo_children():
@@ -214,7 +232,8 @@ def open_clicker_window(player: str):
         tk.Frame(board_frame, height=2, bd=1, relief="sunken", bg="#999").pack(fill="x", pady=5)
 
         for idx, (n, s) in enumerate(leaderboard_data[3:], start=4):
-            tk.Label(board_frame, text=f"{idx}. {n} — {s}", font=("Arial", 11), fg="blue", bg="#f0f0f0").pack(
+            name_color = colorChosen if n == player else "blue"
+            tk.Label(board_frame, text=f"{idx}. {n} — {s}", font=("Arial", 11,"bold"), fg=name_color, bg="#f0f0f0").pack(
                 anchor="w", pady=1)
 
     def on_click():
@@ -249,8 +268,6 @@ def open_clicker_window(player: str):
     render_leaderboard()
     clicker.protocol("WM_DELETE_WINDOW", on_close)
     clicker.mainloop()
-
-
 
 def validate_login(username_var, pw_var, cp_var, win, error_label):
     user = username_var.get().strip()
@@ -290,11 +307,22 @@ def password_window():
     error_label = tk.Label(login, text="", fg="red", bg="#f0f0f0")
     error_label.grid(row=4, column=0, columnspan=2)
 
+    def username_color():
+        colors = askcolor(title="Username Color Chooser")
+        if colors[1]:  # if a color was picked
+            with open("UserAccount/player_preferences.json", "w") as f:
+                json.dump({"username": username_var.get(), "color": colors[1]}, f)
+
+    ttk.Button(
+        login,
+        text='Select username color',
+        command=username_color
+    ).grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
+
     login_btn = partial(validate_login, username_var, password_var, confirm_var, login, error_label)
-    tk.Button(login, text="Login", command=login_btn).grid(row=3, column=0, columnspan=2, pady=10)
+    tk.Button(login, text="Login", command=login_btn).grid(row=3, column=1, columnspan=2, pady=10)
 
     login.mainloop()
 
 if __name__ == "__main__":
     password_window()
-
