@@ -19,6 +19,17 @@ This is what the Cookie Clicker game looks like. The button has animations for l
   <img src="images/GameScreenshots/LeaderboardUpdating.JPG" alt="Leaderboard Update Example" />
 </p>
 
+## NEW added username customisation
+Users can now select a custom color for their username. This preference is saved and automatically applied each time the account is accessed, enhancing personalization. Below is the color selection.
+The leaderboard displays their usernames with the selected colors, creating a more personalised experience.
+
+<div> 
+  <img src="images/GameScreenshots/ColorOptions.JPG" alt="Username color selection" style="max-width: 200px; height: auto;" />
+  <img src="images/GameScreenshots/UsernameColor.JPG" alt="Colored username" style="max-width: 200px; height: auto;" />
+</div>
+
+
+
 # Flowchart Depictions
 This section contains flowcharts that explain how the game functions
 
