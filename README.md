@@ -21,7 +21,7 @@ This is a Python Cookie Clicker game featuring secure client-server communicatio
 - **Hash based security** prevents users from modifying the leaderbaord data by verfiying with a hash file.  
 ## In progress
 
-- **Improved account security with customizable usernames**
+- **Improved account security**
 - **Welcome banner for login page**
 
 ## Original game concept
