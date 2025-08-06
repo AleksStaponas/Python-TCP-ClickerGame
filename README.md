@@ -1,9 +1,5 @@
 # Overview
-This is a Python Cookie Clicker game featuring secure client-server communication using native Python networking libraries and Base64 message encoding communicating through TCP. That saves player progress and acount information e.g. username and password allowing users to not have to sign in again.
-<p align="center">
-  <img src="images/BlobAnimations/largerJeff.png" alt="Blob" />
-</p>
-
+This is a Python Cookie Clicker game featuring secure client-server communication using native Python networking libraries and Base64 message encoding communicating through TCP. That saves player progress and acount information e.g. username and password allowing users to not have to create new acounts.
 ## Key Features
 
 - **TCP Socket Communication**: Persistent connections between client and server
