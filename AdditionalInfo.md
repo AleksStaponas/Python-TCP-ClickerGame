@@ -38,9 +38,3 @@ To increase competitiveness, bots have their scores updated by 1–3 clicks ever
 <p align="center">
   <img src="images/Diagrams/BotLeaderboardUpdate.JPG" alt="Leaderboard Updating" />
 </p>
-
-## In Progress: Verification to Prevent Data Modification concept (user side hash verification has been added)
-To prevent cheating or file tampering, this game uses HMAC (Hash-based Message Authentication Code) to verify updated leaderboard data.
-<p align="center">
-  <img src="images/Diagrams/leaderboard_auth_function.JPG" alt="Leaderboard Authentication" />
-</p>
